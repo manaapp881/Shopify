@@ -1,0 +1,132 @@
+
+<div class="store-app">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">S</span> StorePilot</div>
+    <div class="store-label">YOUR STORE</div>
+    <nav id="navigation">
+      <button class="nav-item active" data-page="dashboard">▦ Dashboard</button>
+      <button class="nav-item" data-page="orders">▤ Orders <span id="orderCount">4</span></button>
+      <button class="nav-item" data-page="products">▣ Products</button>
+      <button class="nav-item" data-page="customers">♙ Customers</button>
+      <button class="nav-item" data-page="analytics">⌁ Analytics</button>
+      <button class="nav-item" data-page="settings">⚙ Settings</button>
+    </nav>
+    <div class="sidebar-bottom">Store management<br><small>Independent demo app</small></div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <div>
+        <div class="mobile-brand">StorePilot</div>
+        <div class="breadcrumb">Store <span>/</span> <b id="pageTitle">Dashboard</b></div>
+      </div>
+      <button class="profile" title="Store profile">SP</button>
+    </header>
+
+    <section id="dashboard" class="page active">
+      <div class="page-heading">
+        <div><h1>Good morning</h1><p>Here's what's happening with your store.</p></div>
+        <button class="primary" onclick="navigate('products');openProductForm()">＋ Add product</button>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card"><div>Total sales <span>↗</span></div><strong id="totalSales">$2,480.00</strong><small class="positive">Sample reporting period</small></article>
+        <article class="stat-card"><div>Orders <span>▤</span></div><strong id="totalOrders">4</strong><small>Across all statuses</small></article>
+        <article class="stat-card"><div>Products <span>▣</span></div><strong id="totalProducts">5</strong><small>In your catalog</small></article>
+        <article class="stat-card"><div>Customers <span>♙</span></div><strong id="totalCustomers">4</strong><small>Sample customer records</small></article>
+      </div>
+
+      <div class="content-grid">
+        <article class="card sales-card">
+          <div class="card-heading"><div><h2>Sales overview</h2><p>Illustrative weekly sales</p></div>
+            <select id="chartRange" aria-label="Chart range">
+              <option value="week">This week</option>
+              <option value="month">This month</option>
+            </select>
+          </div>
+          <div id="chart" class="chart"></div>
+        </article>
+        <article class="card">
+          <div class="card-heading"><div><h2>Store checklist</h2><p>Keep your store organized</p></div></div>
+          <div class="check-item"><span class="check">✓</span><div><b>Set up your catalog</b><small>Add your products</small></div><button onclick="navigate('products')">View</button></div>
+          <div class="check-item"><span class="check">✓</span><div><b>Review orders</b><small>Check fulfillment statuses</small></div><button onclick="navigate('orders')">View</button></div>
+          <div class="check-item"><span class="check">○</span><div><b>Customize your store</b><small>Set your brand colors</small></div><button onclick="navigate('settings')">Edit</button></div>
+        </article>
+      </div>
+
+      <article class="card table-card">
+        <div class="card-heading"><div><h2>Recent orders</h2><p>Your latest sample transactions</p></div><button class="secondary" onclick="navigate('orders')">View all</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Date</th><th>Status</th><th>Total</th></tr></thead><tbody id="recentOrders"></tbody></table></div>
+      </article>
+    </section>
+
+    <section id="products" class="page">
+      <div class="page-heading"><div><h1>Products</h1><p>Manage your catalog and inventory.</p></div><button class="primary" onclick="openProductForm()">＋ Add product</button></div>
+      <article class="card table-card">
+        <div class="toolbar"><input id="productSearch" placeholder="Search products..." aria-label="Search products"><span id="productCountLabel"></span></div>
+        <div class="table-wrap"><table><thead><tr><th>Product</th><th>Price</th><th>Inventory</th><th>Status</th><th>Actions</th></tr></thead><tbody id="productRows"></tbody></table></div>
+      </article>
+      <div id="productEditor" class="card editor" hidden>
+        <h2 id="productFormTitle">Add product</h2>
+        <form id="productForm">
+          <input id="productId" type="hidden">
+          <label>Product name<input id="productName" required maxlength="100"></label>
+          <label>Description<input id="productDescription" maxlength="250"></label>
+          <div class="form-row"><label>Price ($)<input id="productPrice" type="number" min="0" step=".01" required></label><label>Inventory<input id="productInventory" type="number" min="0" step="1" required></label></div>
+          <div class="form-actions"><button class="primary" type="submit">Save product</button><button class="secondary" type="button" onclick="closeProductForm()">Cancel</button></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="orders" class="page">
+      <div class="page-heading"><div><h1>Orders</h1><p>Review sample orders and fulfillment.</p></div></div>
+      <article class="card table-card">
+        <div class="toolbar"><input id="orderSearch" placeholder="Search orders or customers..." aria-label="Search orders"></div>
+        <div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Date</th><th>Status</th><th>Total</th><th>Update</th></tr></thead><tbody id="orderRows"></tbody></table></div>
+      </article>
+    </section>
+
+    <section id="customers" class="page">
+      <div class="page-heading"><div><h1>Customers</h1><p>Sample customer directory.</p></div></div>
+      <article class="card table-card"><div class="table-wrap"><table><thead><tr><th>Customer</th><th>Email</th><th>Orders</th><th>Total spent</th></tr></thead><tbody id="customerRows"></tbody></table></div></article>
+    </section>
+
+    <section id="analytics" class="page">
+      <div class="page-heading"><div><h1>Analytics</h1><p>Illustrative store performance.</p></div></div>
+      <div class="stats-grid">
+        <article class="stat-card"><div>Gross sales</div><strong id="analyticsSales">$2,480.00</strong><small>Sample data</small></article>
+        <article class="stat-card"><div>Average order</div><strong id="averageOrder">$620.00</strong><small>Sales divided by orders</small></article>
+      </div>
+      <article class="card"><h2>Sales activity</h2><p>Use the chart on your dashboard to explore the sample reporting periods.</p><button class="secondary" onclick="navigate('dashboard')">Back to dashboard</button></article>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="page-heading"><div><h1>Settings</h1><p>Customize your independent store dashboard.</p></div></div>
+      <article class="card settings-card">
+        <h2>Store details</h2>
+        <label>Store name<input id="storeName" maxlength="60" value="StorePilot"></label>
+        <label>Currency<select id="currency"><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British Pound</option><option value="CAD">CAD — Canadian Dollar</option></select></label>
+        <label>App background<input id="backgroundColor" type="color" value="#f5f6f5"></label>
+        <label>Accent color<input id="accentColor" type="color" value="#276749"></label>
+        <button class="primary" onclick="saveSettings()">Save settings</button>
+        <button class="secondary" onclick="resetSettings()">Reset appearance</button>
+      </article>
+      <article class="card settings-card"><h2>Local data</h2><p>Your sample data is saved in this browser.</p><button class="secondary" onclick="exportStore()">Export store data</button><button class="danger" onclick="resetStore()">Reset sample data</button></article>
+    </section>
+
+    <footer>StorePilot · Independent store management prototype</footer>
+  </main>
+</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pen</title>
+  </head>
+  <body>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
